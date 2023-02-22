@@ -31,6 +31,14 @@ wire [31:0] reg2_data;
 wire [4:0] write_reg_addr;
 wire [31:0] write_reg_data;
 
+// -------------------------------------------------------
+// Setup output file for possible debugging uses
+// -------------------------------------------------------
+initial begin
+    $dumpfile("lab05.vcd");
+    $dumpvars(0);
+end
+
 processor #(.MEM_FILE("individualInstructions.coe")) uut (
     .clk(clk),
     .rst(rst),
