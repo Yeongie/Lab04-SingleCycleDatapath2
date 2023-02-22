@@ -6,7 +6,7 @@ In this lab, you will be building a single cycle version of the MIPS datapath. T
 
 ## Prelab
 
-You will need to submit several tests for your prelab. These must be submitted on ilearn prior to coming to the lab (check online for due dates). These tests will each consist of an init.coe, a corresponding .asm file and a processor_tb.v file for each.your test file (init.coe a corresponding .asm file and a processor_tb.v). The tests you should write are:
+You will need to submit several tests for your prelab. These must be submitted on Gradescope (check online for due dates). These tests will each consist of an init.coe, a corresponding .asm file and a [`processor_tb.v`](./processor_tb.v) file for each. Your test file (init.coe a corresponding .asm file and a processor_tb.v). The tests you should write are:
 
 
 **`individualInstructions.asm`**
@@ -51,7 +51,7 @@ The component connections (shown below) are outlined in the CS161 notes.
 ![](./assets/single_cycle_datapath.png)
 
 
-You will need to submit your testbench on ilearn prior to coming to lab (check online for due
+You will need to submit your testbench on Gradescope (check online for due
 dates). Your testbench should demonstrate that you have read through the lab specifications
 and understand the goal of this lab. You will need to consider the boundary cases. You do not
 need to begin designing yet, but this testbench will be helpful during the lab while you are
@@ -90,29 +90,14 @@ Add the modules for the branching hardware. This may involve breaking some conne
 
 For the turn-in of this lab, you should have a working **single-cycle datapath**. The true inputs to the top module ([`processor.v`](./processor.v)) are only a `clk`, and `rst` signals, although you will need to have the debug signals correctly connected as well. The datapath should be programmed by a “`.coe`” file that holds MIPS assembly instructions. This file is a paramter to the top module, but defaults to “`init.coe`”.
 
-For this lab, you are not required to build all the datapath components (in black in the image above) but you are required to connect them together in the datapath template provided (datapath.v). You will be connecting this datapath and your aluControlUnit.v and controlUnit.v from Lab 03 in the top-level module ([`processor.v`](./processor.v)). All of the files can be found here. If you need more functionality you will have to build the components yourself. To use the given components you only need to copy the given Verilog files into your project. By default, the architecture's memory loads data from an “`init.coe`” file. The programming occurs when the rst signal is held high. A sample init.coe file is given but does not fully test the datapath. You will have to extend it. For convenience, the assembly for the `init.coe` file can be found here.  The last instruction of the program is a `lw` to load the final value from memory into register `$t0` and is used to verify correct functionality in the test bench (see below). If you add a similar line to your own program it will make testing easier. .
-
-### Architecture Case Study
-
-For the lab this week you are also expected to perform a simple case study. It is meant to show
-how important understanding a computer's architecture is, and the compiler is when developing
-efficient code. For this study, you are to compare and analyze the execution time of the two
-programs given [here](./case_study.tar.gz). You should run a number of experiments varying the input size from 100
-to 30,000. Based on the results you are to write a report of your findings. The report should
-contain a graph of your data and a useful analysis of it. You should draw conclusions based on
-your findings. Reports that simply restate what is in the graph will not get credit. To make it
-clear, make sure you used the concepts you have learned so far in 161 and 161L when
-explaining the differences in performance. If a confusing or fuzzy explanation is given you will
-get low or no marks. The report should be a part of REPORT.md.
+For this lab, you are not required to build all the datapath components (in black in the image above) but you are required to connect them together in the datapath template provided ([`processor.v`](./processor.v)). You can connect this datapath and your aluControlUnit.v and controlUnit.v from Lab 04 in this file, however a working implementation is provided. All of the files are in this GitHub repository. If you need more functionality you will have to build the components yourself. To use the given components you only need to copy the given Verilog files into your project. By default, the architecture's memory loads data from an “`init.coe`” file. The programming occurs when the rst signal is held high. A sample init.coe file is given but does not fully test the datapath. You will have to extend it. For convenience, the assembly for the `init.coe` file can be found here.  The last instruction of the program is a `lw` to load the final value from memory into register `$t0` and is used to verify correct functionality in the test bench (see below). If you add a similar line to your own program it will make testing easier. .
 
 ### Producing the Waveform
 
-Once you've synthesized the code for the test-bench and the `aluControlUnit` and `controlUnit` modules, you can run
+Once you've synthesized the code for the test-bench modules, you can run
 the test-bench simulation script to make sure all the tests pass. This simluation run should
 produce the code to make a waveform. Use techniques you learned in the first lab to produce a
-waveform for this lab and save it as a PNG. 
-
-You don't need to add a marker this time. Also, I've provided a .gtkw.
+waveform for this lab and save it as a PNG. Once again, I've provided a .gtkw.
 
 ### The Lab Report
 
