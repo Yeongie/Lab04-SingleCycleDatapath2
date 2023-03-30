@@ -1,4 +1,4 @@
-# Lab 5 - The Datapath Control and ALU Control Units 
+# Lab 3 - Single Cycle Datapath 
 
 ## Introduction
 
