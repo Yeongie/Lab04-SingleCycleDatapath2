@@ -23,7 +23,7 @@ as in the synthesized testbench using the outputs on the right of the Digital di
 |`dst_data`    | This is the data to be stored in register address for `dst_addr` going into the register file                     |
 
 
-## Assembling Instructions
+## Assembling & Tracing Instructions
 
 For this lab we will store several instructions in RAM and the datapath will "execute" them. In order to understand if your
 implementation is working, we will need to understand two separate concepts: hand assembling instructions and hand tracing a simple 
@@ -82,6 +82,92 @@ You will need to do assemble the remaining instructions for the lab report, so m
 
 ### Hand Tracing a Simple Program
 
+In order to test your implementation, it is important to know what effects each instruction have on the state of the processor. In this section
+we'll learn how to hand trace the execution of instructions and keep track of the changes to state. Specifically, we will keep track of what 
+values change in the register file and in RAM. 
+
+To keep track of the state of the register file (the values of the general purpose registers), we can create a table with the name and register
+address of each register along with its current value. Below is a table that we can use for this purpose. We will assume that all registers
+are initialized to zero.
+
+|Reg. Name|Reg. Addr.|Value |
+|---------|---------:|------|
+| `$zero` | 0        | 0    |
+| `$at`   | 1        | 0    |
+| `$v0`   | 2        | 0    |
+| `$v1`   | 3        | 0    |
+| `$a0`   | 4        | 0    |
+| `$a1`   | 5        | 0    |
+| `$a2`   | 6        | 0    |
+| `$a3`   | 7        | 0    |
+| `$t0`   | 8        | 0    |
+| `$t1`   | 9        | 0    |
+| `$t2`   | 10       | 0    |
+| `$t3`   | 11       | 0    |
+| `$t4`   | 12       | 0    |
+| `$t5`   | 13       | 0    |
+| `$t6`   | 14       | 0    |
+| `$t7`   | 15       | 0    |
+| `$s0`   | 16       | 0    |
+| `$s1`   | 17       | 0    |
+| `$s2`   | 18       | 0    |
+| `$s3`   | 19       | 0    |
+| `$s4`   | 20       | 0    |
+| `$s5`   | 21       | 0    |
+| `$s6`   | 22       | 0    |
+| `$s7`   | 23       | 0    |
+| `$t8`   | 24       | 0    |
+| `$t9`   | 25       | 0    |
+| `$k0`   | 26       | 0    |
+| `$k1`   | 27       | 0    |
+| `$gp`   | 28       | 0    |
+| `$sp`   | 29       | 0    |
+| `$fp`   | 30       | 0    |
+| `$ra`   | 31       | 0    |
+
+Luckily for the programs in this lab, we won't need all of these registers. The only registers used are `$zero`, `$v0`, `$v1`, `$a0`, `$a1`, and `$a2`.
+So you can pare down your table to only include the registers used in the program you are running.
+
+With RAM, there can be thousands, millions or even billions of addresses used. But the actual addresses used is very sparse, especially with smaller 
+programs. Therefore, there's no need to keep a table of all addresses, but rather only those that are being used by the program. Below is an example
+of a table with two address that are not necessarily [contiguous](https://www.merriam-webster.com/dictionary/contiguous) in memory.
+
+|Address|Value       |
+|------:|------------|
+|31     | 0x00000056 |
+|132    | 0x000000AB |
+
+Notice that the values are stored as Hex. This base is not required, but is useful because it's easy to infer the size of memory since there are 8 hex
+digits, which means that each memory location stores 32-bits.
+
+Now to trace a program you will create a table for the registers and RAM for each instruction so that the complete state is expressed for each instruction.
+This organization of the state of the processor will help you to understand whether the processor is behaving properly.
+
+Here is a trace of the first instruction of `init.asm`, with a pared down list of registers and only addresses 31 and 132. The first reads `lw $v0 31($zero)`.
+This instruction means that we will take the value at the effective address 31 (0 + 31) and load that value into the register `$v0` at address 2. We'll need to
+know the value at address 31, which is given by [`init.hex`](./init.hex) for Digital and [`init.coe`](./init.coe) for Verilog. In both of these files the value
+at address 31 is 0x56. Therefore, at the end of executing this first instruction the state of registers and RAM is the following:
+
+**Register File**
+|Reg. Name|Reg. Addr.|Value |
+|---------|---------:|------|
+| `$zero` | 0        | 0    |
+| `$at`   | 1        | 0    |
+| `$v0`   | 2        | 0x56 |
+| `$v1`   | 3        | 0    |
+| `$a0`   | 4        | 0    |
+| `$a1`   | 5        | 0    |
+| `$a2`   | 6        | 0    |
+| `$a3`   | 7        | 0    |
+
+**RAM**
+|Address|Value       |
+|------:|------------|
+|31     | 0x00000056 |
+|132    | 0x00000000 |
+
+
+Repeat this step for each instruction and you have a hand tracing of a program execution.
 
 ## Recommended Iterative Development
 
