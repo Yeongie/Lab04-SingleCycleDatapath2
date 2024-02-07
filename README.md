@@ -4,62 +4,84 @@
 
 In this lab, you will be building a single cycle version of the MIPS datapath. The datapath is composed of many components interconnected. They include an ALU, Registers, Memory, and most importantly the Program Counter (PC). The program counter is the only clocked component within this design and specifies the memory address of the current instruction. Every cycle the PC will be moved to the location of the next instruction. The MIPS architecture is BYTE ADDRESSABLE. Remember this when handling the PC, and the memory (which is WORD ADDRESSABLE).
 
-## Prelab
+You will build this datapath in Digital using the template provided ([lab03.dig](./lab03.dig)). If you open this file in Digital
+you will notice all the components of the datapath, but without any interconnections using wires. Your goal is to add the necessary
+wires in Digital, and test that the datapath is working properly.
 
-You will need to submit several tests for your prelab. These must be submitted on Gradescope (check online for due dates). These tests will each consist of an init.coe, a corresponding .asm file and a [`processor_tb.v`](./processor_tb.v) file for each. Your test file (init.coe a corresponding .asm file and a processor_tb.v). The tests you should write are:
+To test that it is working properly, we will need to inspect certain elements of the datapath. We will do this in Digital, as well
+as in the synthesized testbench using the outputs on the right of the Digital diagram. Below is a table of these output names and their description so that you can wire them up properly.
+
+|Digital Output| Description                                                                                                       |
+|--------------|-------------------------------------------------------------------------------------------------------------------|
+|`PC`          | This is the value currently stored in the Program Counter register. It is the address of the current instruction. |
+|`opcode`      | This is the opcode of the currently executing instruction. It is bits 31 to 26 of the instruction.                |
+|`src1_addr`   | This is the register address of the first source register from the instruction.                                   |
+|`src1_out`    | This is the data at the register address for `src1_addr` coming from the register file                            |
+|`src2_addr`   | This is the register address of the second source register from the instruction.                                  |
+|`src2_out`    | This is the data at the register address for `src2_addr` coming from the register file                            |
+|`dst_addr`    | This is the register address of the destination register from the instruction.                                    |
+|`dst_data`    | This is the data to be stored in register address for `dst_addr` going into the register file                     |
 
 
-**`individualInstructions.asm`**
+## Assembling Instructions
+
+For this lab we will store several instructions in RAM and the datapath will "execute" them. In order to understand if your
+implementation is working, we will need to understand two separate concepts: hand assembling instructions and hand tracing a simple 
+program. The following sections describe how to do these two concepts briefly.
+
+### Hand Assembling Instrucitons
+
+The following code exercises all the instructions that our simple single cycle datapath can execute. However, what you see below
+is human readable, not computer readable. Since computers only understand 1's and 0's, we need to convert this human readable 
+assembly into computer readable binary format (this is usually the job of an assembler, but we can do it too). Using this document from [Wikibooks](https://en.wikibooks.org/wiki/MIPS_Assembly/Instruction_Formats), we have all the information we need to assemble these instructions. All the instructions below are either R-type or I-Type instructions. There are no J-Type instructions, so don't
+worry about those.
+
+**`init.asm`**
 ```asm
-lw $v0, X($zero)
-lw $v1, Y($zero)
-add $a0, $v0, $v1
-addi $a0, $v0, Z
-...
+lw $v0 31($zero)
+add $v1 $v0 $v0
+sw $v1 132($zero)
+sub $a0 $v1 $v0
+addi $a1 $v1 12
+and $a2 $a1 $v1
+or $a3 $a2 $v0
+nor $t0 $a2 $v0
+slt $a2 $a1 $a0
+beq $a2 $zero -8($zero)
+lw $t0 132($zero)
 ```
+As an example, let's see how the first instruction would be encoded using the document above. First we know that this instruction
+is `lw`. From the last section of the above document, we can use the _Opcodes_ table to learn that the `lw` instruction uses the 
+I-type instruction format, and has the opcode 0x23. 
 
-Where X and Y are the address of data you have placed in your .coe file and Z is the immediate you are using. The numbers corresponding to the register numbers are in a table at the end of the document.
+Looking at the I-format instruction from this document we know it's format is:
 
-**`program.asm`**
+|opcode  | rs     | rt     | IMM     |
+|--------|--------|--------|---------|
+| 6 bits | 5 bits | 5 bits | 16 bits |
 
-```asm
-# An entire program where each instruction
-# has an effect on the final outcome.
-# The result will be verified through 
-# inspection of the write_reg_data value during
-# execution of the last instruction (see below)
-```
+Where `rs` is the source register (which holds the base addr) and `rt` is the target or destination register. Looking at the first 
+instruction we know the destination (the first register from the left) is `$v0` and the source register is `$zero`. Once again, these
+are human readable names, and we need computer readable names. Luckily this document has the mapping between the human readable and
+computer readable addresses. From this document we learn that `$v0` is register `r2`, which has register address `2`. Next we see that `$zero` is register `r0` which has register address `0`. With this knowledge and a programming calculator to convert 31 to 
+binary we can now fully encode this instruction as:
 
-**`individualInstructions.coe`**
+|opcode   | rs    | rt     | IMM              |
+|---------|-------|--------|------------------|
+| 10 0011 | 00000 | 00010  | 0000000000011111 |
+| 0x23    | 0x00  | 0x02   | 0x001F           |
 
-```asm
-100011 00000 00010 XXXXXXXXXXXXXXXX
-100011 00000 00011 YYYYYYYYYYYYYYYY
-000000 00010 00011 00100 00000 000000
-001000 00010 00100 ZZZZZZZZZZZZZZZZ
-```
+Now putting this all together in both computer readable, and slightly more human readable forms (Hex), we get the following for 
+this one instruction:
 
-The spaces are added for clarity and should be removed before running. The X’s, Y’s, and Z’s should also be replaced with there corresponding values. 
-program.coe
-Machine language translation of the program from above. 
+|                                                      |
+|------------------------------------------------------|
+| 1000 1100 0000 0010 0000 0000 0001 1111 = 0x8C02001F |
 
-See testbench example files below.
+You will need to do assemble the remaining instructions for the lab report, so make sure you understand how to do this procedure.
 
-Your init.coe should demonstrate that you have read through the lab specifications and understand the goal of this lab. You do not need to begin designing yet, but this testbench will be helpful during the lab while you are designing. 
+### Hand Tracing a Simple Program
 
-The component connections (shown below) are outlined in the CS161 notes.
-![](./assets/single_cycle_datapath.png)
-
-
-You will need to submit your testbench on Gradescope (check online for due
-dates). Your testbench should demonstrate that you have read through the lab specifications
-and understand the goal of this lab. You will need to consider the boundary cases. You do not
-need to begin designing yet, but this testbench will be helpful during the lab while you are
-designing.
-
-You will submit the entire lab repository to Gradescope. Part of your score will come from the fact
-that it properly sythesizes. The other part of your score will be based on the completeness of your
-tests, which the TA and I will grade.
 
 ## Recommended Iterative Development
 

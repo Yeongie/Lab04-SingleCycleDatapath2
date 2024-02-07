@@ -22,37 +22,42 @@
 
 `timescale 1ns / 1ps
 
-`include "cpu_constant_library.v"
+`define FUNCT_AND   		6'b100100
+`define FUNCT_OR    		6'b100101
+`define FUNCT_ADD   		6'b100000
+`define FUNCT_SUBTRACT 	6'b100010
+`define FUNCT_LESS_THAN 6'b101010
+`define FUNCT_NOR 		6'b100111
+
+`define ALU_AND  		 4'b0000
+`define ALU_OR   		 4'b0001
+`define ALU_ADD  		 4'b0010
+`define ALU_SUBTRACT   4'b0110
+`define ALU_LESS_THAN  4'b0111
+`define ALU_NOR        4'b1100
 
 module alu_control (	
 	input wire [1:0]	alu_op,	
-	input wire [5:0]	instruction_5_0,	
-	output reg [3:0] 	alu_out   
+	input wire [5:0]	funct,	
+	output reg [3:0] 	alu_control   
 );
 
 always @(*)
-begin 
-
- if (alu_op==2'b00) begin // LW and SW 
-	alu_out = `ALU_ADD ; 
- end 
-
- else if (alu_op==2'b01) begin  // Branch 
-		alu_out = `ALU_SUBTRACT ; 
- end 
-	
- else begin 
-	
-	case (instruction_5_0)   // R Type Instruction 
-		`FUNCT_AND : 		 alu_out = `ALU_AND ; 
-		`FUNCT_OR  : 		 alu_out = `ALU_OR ; 
-		`FUNCT_ADD : 		 alu_out = `ALU_ADD ; 
-		`FUNCT_SUBTRACT  : alu_out = `ALU_SUBTRACT ; 
-		`FUNCT_LESS_THAN : alu_out = `ALU_LESS_THAN ; 
-		`FUNCT_NOR  : 		 alu_out = `ALU_NOR ; 
-		default    :       alu_out = `ALU_ADD ;      
+begin
+	if (alu_op==2'b00) begin // LW and SW 
+		alu_control = `ALU_ADD ; 
+ 	end else if (alu_op==2'b01) begin  // Branch 
+		alu_control = `ALU_SUBTRACT ; 
+ 	end else begin 
+		case (funct)   // R Type Instruction 
+			`FUNCT_AND : 		 alu_control = `ALU_AND ; 
+			`FUNCT_OR  : 		 alu_control = `ALU_OR ; 
+			`FUNCT_ADD : 		 alu_control = `ALU_ADD ; 
+			`FUNCT_SUBTRACT  : alu_control = `ALU_SUBTRACT ; 
+			`FUNCT_LESS_THAN : alu_control = `ALU_LESS_THAN ; 
+			`FUNCT_NOR  : 		 alu_control = `ALU_NOR ; 
+			default    :       alu_control = `ALU_ADD ;      
 	endcase 
-	
   end // End else 
 
 end  // End block 

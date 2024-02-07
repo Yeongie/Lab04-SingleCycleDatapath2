@@ -28,12 +28,12 @@
 module cpumemory #(parameter WORD_SIZE=32,FILENAME="init.coe") (
     input wire clk,
     input wire rst,
-    input wire[7:0] instr_read_address,
-    output wire[WORD_SIZE-1:0] instr_instruction,
-    input wire data_mem_write,   
-    input [7:0] data_address,    
-    input wire[WORD_SIZE-1:0] data_write_data ,    
-    output wire[WORD_SIZE-1:0] data_read_data  
+    input wire[7:0] instr_addr,
+    output wire[WORD_SIZE-1:0] instr_val,
+    input wire data_write_en,   
+    input [7:0] data_addr,    
+    input wire[WORD_SIZE-1:0] data_val_in ,    
+    output wire[WORD_SIZE-1:0] data_val_out  
 );
 
 // ------------------------------------------
@@ -50,12 +50,12 @@ end
 // Read and Write block 
 // ------------------------------------------ 
 
-assign instr_instruction = buff[instr_read_address];
-assign data_read_data = buff[data_address];
+assign instr_val = buff[instr_addr];
+assign data_val_out = buff[data_addr];
 	
 always @(posedge clk) begin 
-	if (data_mem_write) begin 
-		buff[data_address] = data_write_data;
+	if (data_write_en) begin 
+	    buff[data_addr] = data_val_in;
 	end
 end 
 endmodule

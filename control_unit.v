@@ -22,7 +22,11 @@
 
 `timescale 1ns / 1ps
 
-`include "cpu_constant_library.v"
+`define OPCODE_R_TYPE       6'b000000
+`define OPCODE_LOAD_WORD    6'b100011
+`define OPCODE_STORE_WORD   6'b101011
+`define OPCODE_BRANCH_EQ    6'b000100
+`define OPCODE_ADDI         6'b001000
  
 module control_unit (
  input wire[5:0] instr_op   ,   
