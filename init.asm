@@ -7,5 +7,5 @@ and $a2 $a1 $v1
 or $a3 $a2 $v0
 nor $t0 $a2 $v0
 slt $a2 $a1 $a0
-beq $a2 -8($zero)
+beq $a2 $zero -8
 lw $t0 132($zero)

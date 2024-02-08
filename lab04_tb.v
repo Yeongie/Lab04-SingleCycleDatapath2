@@ -112,37 +112,37 @@ initial begin
     @(negedge rst); // Wait for reset
     @(negedge clk); // Skip LW instruction
 
-    $write("Test Case %0d: lw $v0 31($zero)...", totalTests);
+    $write("Test Case %0d: lw $v0 31($zero)...", totalTests+1);
     test_case(32'h0, 6'h23, 5'h0, 32'h0, 5'h2, 32'h0, 5'h2, 32'h56);
 
-    #100; $write("Test Case %0d: add $v1 $v0 $v0...", totalTests);
+    #100; $write("Test Case %0d: add $v1 $v0 $v0...", totalTests+1);
     test_case(32'h4, 6'h00, 5'h2, 32'h56, 5'h2, 32'h56, 5'h3, 32'hAC);
 
-    #100; $write("Test Case %0d: sw $v1 132($zero)...", totalTests);
+    #100; $write("Test Case %0d: sw $v1 132($zero)...", totalTests+1);
     test_case(32'h8, 6'h2b, 5'h0, 32'h0, 5'h3, 32'hAC, 5'h3, 32'h84);
 
-    #100; $write("Test Case %0d: sub $a0 $v1 $v0...", totalTests);
+    #100; $write("Test Case %0d: sub $a0 $v1 $v0...", totalTests+1);
     test_case(32'hC, 6'h00, 5'h3, 32'hac, 5'h2, 32'h56, 5'h4, 32'h56);
 
-    #100; $write("Test Case %0d: addi $a1 $v1 12...", totalTests);
+    #100; $write("Test Case %0d: addi $a1 $v1 12...", totalTests+1);
     test_case(32'h10, 6'h08, 5'h3, 32'hac, 5'h5, 32'h00, 5'h5, 32'hB8);
 
-    #100; $write("Test Case %0d: and $a2 $a1 $v1...", totalTests);
+    #100; $write("Test Case %0d: and $a2 $a1 $v1...", totalTests+1);
     test_case(32'h14, 6'h00, 5'h5, 32'hb8, 5'h3, 32'hac, 5'h6, 32'hA8);
 
-    #100; $write("Test Case %0d: or $a3 $a2 $v0...", totalTests);
+    #100; $write("Test Case %0d: or $a3 $a2 $v0...", totalTests+1);
     test_case(32'h18, 6'h00, 5'h6, 32'ha8, 5'h2, 32'h56, 5'h7, 32'hfe);
 
-    #100; $write("Test Case %0d: nor $t0 $a2 $v0...", totalTests);
+    #100; $write("Test Case %0d: nor $t0 $a2 $v0...", totalTests+1);
     test_case(32'h1c, 6'h00, 5'h6, 32'ha8, 5'h2, 32'h56, 5'h8, 32'hffffff01);
 
-    #100; $write("Test Case %0d: slt $a2 $a1 $a0...", totalTests);
+    #100; $write("Test Case %0d: slt $a2 $a1 $a0...", totalTests+1);
     test_case(32'h20, 6'h00, 5'h5, 32'hb8, 5'h4, 32'h56, 5'h6, 32'h0);
 
-    #100; $write("Test Case %0d: beq $a2 -8($zero)...", totalTests);
+    #100; $write("Test Case %0d: beq $a2 $zero -8...", totalTests+1);
     test_case(32'h24, 6'h04, 5'h5, 32'hb8, 5'h0, 32'h00, 5'h1f, 32'hb8);
 
-    #100; $write("Test Case %0d: lw $t0 132($zero)...", totalTests);
+    #100; $write("Test Case %0d: lw $t0 132($zero)...", totalTests+1);
     test_case(32'h28, 6'h23, 5'h0, 32'h0, 5'h8, 32'hffffff01, 5'h8, 32'hac);
 
     $display("------------------------------------------------------------------");
