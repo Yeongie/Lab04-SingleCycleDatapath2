@@ -1,11 +1,11 @@
-# Lab 3 - Single Cycle Datapath 
+# Lab 4 - Single Cycle Datapath 
 
 ## Introduction
 
 In this lab, you will be building a single cycle version of the MIPS datapath. The datapath is composed of many components interconnected. They include an ALU, Registers, Memory, and most importantly the Program Counter (PC). The program counter is the only clocked component within this design and specifies the memory address of the current instruction. Every cycle the PC will be moved to the location of the next instruction. The MIPS architecture is BYTE ADDRESSABLE. Remember this when handling the PC, and the memory (which is WORD ADDRESSABLE).
 
-You will build this datapath in Digital using the template provided ([lab03.dig](./lab03.dig)). If you open this file in Digital
-you will notice all the components of the datapath, but without any interconnections using wires. Your goal is to add the necessary
+You will build this datapath in Digital using the template provided ([lab04.dig](./lab04.dig)). If you open this file in Digital
+you will notice all the components of the datapath, but without any interonnections using wires. Your goal is to add the necessary
 wires in Digital, and test that the datapath is working properly.
 
 To test that it is working properly, we will need to inspect certain elements of the datapath. We will do this in Digital, as well
@@ -174,11 +174,11 @@ Repeat this step for each instruction and you have a hand tracing of a program e
 For this lab we are going to use Digital to wire-up our implementation and then have it export the design to Verilog. We will
 then use the generated Verilog code to test your design. 
 
-For this lab you will start by opening [lab03.dig](./lab03.dig). In it you should see all the components of the datapath (which)
+For this lab you will start by opening [lab04.dig](./lab04.dig). In it you should see all the components of the datapath (which)
 are mostly written in Verilog. However, what is missing are all the wires connecting these componenents. Below is a picture of 
 what you will start with. 
 
-![Single Cycle Datapath Initial Design](./assets/lab03.png)
+![Single Cycle Datapath Initial Design](./assets/lab04.png)
 
 Your goal is to wire all the components together correctly so that the simple instruction given in [init.asm](./init.asm) execute as
 predicted based on the hand tracing you do as part of the lab report. If everything matches, then your design should pass the autograder
