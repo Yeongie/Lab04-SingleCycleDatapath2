@@ -264,49 +264,88 @@ make this datapath work.
 | Outputs      |Add result         | result                           |
 |              |                   | zero (unconnected)               |
 
-### Step 1: 
+### Testing Your Implementation
 
-Count up the PC and check that each instruction is correct (`instr_opcode`, `reg1_addr`, `reg2_addr`, `write_reg_addr`)
+Once you have connected all the wires, you will want to test that everything is working. To test is, in Desgin, you can what the outputs on the right
+side for each clock cycle. Note the values of the PC, opcode, register addresses and values, and see if they match a hand tracing of the program in 
+[init.asm](./init.asm). You will need to do this tracing as part of the lab report anyway.
 
-Modules: 
-- Instruction memory* ([`cpumemory.v`](./cpumemory.v))
-- PC Register ([`gen_register.v`](./gen_register.v))
-- PC adder (optional)
+### Exporting to Verilog
 
-### Step 2:
-Verify that the control signals are still correct on the `controlUnit` from the previous lab. Verify that you can read values from the registers (at this point they will most likely be all 0’s). You should now be able to get defined values for all debug signals (including `reg1_data`, `reg2_data`, `write_reg_data`). The data values will most likely be all 0’s since no data manipulation is being done yet.
+Once you are convinced everthing is working, you will export the design to Verilog. In Digital, go to File -> Export -> Export to Verilog. Name this 
+exported file lab04.v. This exported file will have all the code included with this project and the wiring you did in Digital. 
 
-### Step 3:
+As a final check before turning in your code you can run the verilog test bench that has the same tests as the Gradescope autograder. If your tests 
+pass now, you should be fine once you submit to Gradescope.
 
-Add the `aluControlUnit` from the previous lab as well as the ALU. There won’t be any change in the debug signals yet, but verify that the ALU output is defined. 
+To run theses tests use the following command to synthesize the test bench:
 
-### Step 4:
-Connect the Data Memory* to the ALU and the CPU registers. At this point your data signals (reg1_data, reg2_data, write_reg_data) should be correct for all non-branch instructions. 
+```sh
+iverilog -o lab04_tb lab04_tb.v lab04.v 
+```
 
-* Data and Instruction memory are unified for our processor. The CPU_memory module is a dual-port memory unit that allows simultaneous reads of instructions as well as a read/write of data through separate ports. In step 1 you will only have the instruction ports connected, now you’ll connect the rest of them.
+Once the synthesis works, then you can run the test bench with the following command:
 
-### Step 5:
-Add the modules for the branching hardware. This may involve breaking some connections from step 1 to insert the proper hardware for branching. You should not have any undefined signal before this step, so it shouldn’t be too difficult to trace down any introduced high Z or undefined signals. 
+```sh
+vvp lab04_tb
+```
 
+One potential problem is that the naming of components in the exported Verilog may not be consistent. The following code is in [lab04_tb.v](./lab04_tb.v):
+
+```verilog
+initial begin 
+	$readmemb("init.coe", uut.DIG_RAMDualAccess_i7.memory,0,255);
+end 
+```
+
+The name `DIG_RAMDualAccess_i7` needs to be the same as the name in your exported verilog which should have something like:
+
+```verilog
+// cpumemory
+  DIG_RAMDualAccess #(
+    .Bits(32),
+    .AddrBits(8)
+  )
+  DIG_RAMDualAccess_i7 (
+    .str( mem_write ),
+    .C( clk ),
+    .ld( mem_read ),
+    .\1A ( s10 ),
+    .\1Din ( src2_out_temp ),
+    .\2A ( s11 ),
+    .\1D ( data_val ),
+    .\2D ( s0 )
+  );
+```
+
+Make sure those names match in both files if you are having trouble getting code to run in the synthesized test bench.
 ## Deliverables
 
-For the turn-in of this lab, you should have a working **single-cycle datapath**. The true inputs to the top module ([`processor.v`](./processor.v)) are only a `clk`, and `rst` signals, although you will need to have the debug signals correctly connected as well. The datapath should be programmed by a “`.coe`” file that holds MIPS assembly instructions. This file is a paramter to the top module, but defaults to “`init.coe`”.
-
-For this lab, you are not required to build all the datapath components (in black in the image above) but you are required to connect them together in the datapath template provided ([`processor.v`](./processor.v)). You can connect this datapath and your aluControlUnit.v and controlUnit.v from Lab 04 in this file, however a working implementation is provided. All of the files are in this GitHub repository. If you need more functionality you will have to build the components yourself. To use the given components you only need to copy the given Verilog files into your project. By default, the architecture's memory loads data from an “`init.coe`” file. The programming occurs when the rst signal is held high. A sample init.coe file is given but does not fully test the datapath. You will have to extend it. For convenience, the assembly for the `init.coe` file can be found here.  The last instruction of the program is a `lw` to load the final value from memory into register `$t0` and is used to verify correct functionality in the test bench (see below). If you add a similar line to your own program it will make testing easier. .
-
-### Producing the Waveform
-
-Once you've synthesized the code for the test-bench modules, you can run
-the test-bench simulation script to make sure all the tests pass. This simluation run should
-produce the code to make a waveform. Use techniques you learned in the first lab to produce a
-waveform for this lab and save it as a PNG. Once again, I've provided a .gtkw.
+For the turn-in of this lab, you should have a working **single-cycle datapath**. You will need to turn in the [lab04.dig](./lab04.dig) file with
+all the correct wiring, and [lab04.v](./lab04.v), which is exported from Digital. This file should compile and be added to your Github reposiotry
+for this lab.
 
 ### The Lab Report
 
 Finally, create a file called REPORT.md and use GitHub markdown to write your lab report. This lab
 report will again be short, and comprised of two sections. The first section is a description of 
-each test case. Use this section to discuss what changes you made in your tests from the prelab
-until this final report. The second section should include your waveform. 
+any issues or bugs you encountered while doing the lab and how you fixed these issues and bugs. 
+
+The second section should include the assembly of a brief MIPS assembly program below, and then the
+trace you used to verify your design running the code in [init.asm](./init.asm) with memory as shown
+in both [init.coe](./init.coe) and [init.hex](./init.hex). Use the table from the section aboved titled
+"Hand Tracing a Simple Program".
+
+Below is the program that you need to assemble as part of this lab report. It is different than the program
+in [init.asm](./asm) because that program is already assembled in  [init.coe](./init.coe) and [init.hex](./init.hex).
+
+```asm
+and $t0 $t1 $t2
+addi $t3 $t4 123
+lw $t5, 135($t1)
+sw $t3, 136($t1)
+beq $t3, $zero, -10
+```
 
 ## Submission:
 
