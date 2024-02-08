@@ -4,9 +4,11 @@
 
 In this lab, you will be building a single cycle version of the MIPS datapath. The datapath is composed of many components interconnected. They include an ALU, Registers, Memory, and most importantly the Program Counter (PC). The program counter is the only clocked component within this design and specifies the memory address of the current instruction. Every cycle the PC will be moved to the location of the next instruction. The MIPS architecture is BYTE ADDRESSABLE. Remember this when handling the PC, and the memory (which is WORD ADDRESSABLE).
 
-You will build this datapath in Digital using the template provided ([lab04.dig](./lab04.dig)). If you open this file in Digital
+You will build this datapath (diagramed below in fig. 4-17) in Digital using the template provided ([lab04.dig](./lab04.dig)). If you open this file in Digital
 you will notice all the components of the datapath, but without any interonnections using wires. Your goal is to add the necessary
 wires in Digital, and test that the datapath is working properly.
+
+![Figure 4-17](./assets/fig-4.17.png)
 
 To test that it is working properly, we will need to inspect certain elements of the datapath. We will do this in Digital, as well
 as in the synthesized testbench using the outputs on the right of the Digital diagram. Below is a table of these output names and their description so that you can wire them up properly.
