@@ -188,64 +188,58 @@ The Digital file has all the components from the figure 4.17 above. However, the
 are different. Below are tables that map between figure 4.17 and the design in Digital. From this you can see the interconnections that
 make this datapath work.
 
-| PC         |Figure 4.17 | Digital                            |
+|            |            |                                    |
 |------------|------------|------------------------------------|
+| **PC**     |**Figure 4.17**| **Digital**                            |
 |            |PC          | gen_register (with PC label below) |
-| Inputs     |            | clk (connects to clk in Inputs)    |
+|**Inputs**  |            | clk (connects to clk in Inputs)    |
 |            |            | rst (connects to rst in Inputs)    |
 |            | Data In    | data_in                            |
 |            |            | write_en (connect it to clk)       |
-| Outputs    | Data Out   | data_out                           |
-
-
-| RAM        |Figure 4.17        | Digital                                           |
-|------------|-------------------|---------------------------------------------------|
+|**Outputs** | Data Out   | data_out                           |
+|            |            |                                    |
+|**RAM**     |**Figure 4.17**    | **Digital**                                       |
 |            |Instruction Memory | cpumemory                                         |
-| Inputs     |Read Address       | 2A                                                |
-| Outputs    |Instruction[31-0]  | 2D                                                |
+|**Inputs**  |Read Address       | 2A                                                |
+|**Outputs** |Instruction[31-0]  | 2D                                                |
 |            |Data Memory        | cpumemory (Same componenet as Instruction Memory) |
-| Inputs     |Address            | 1A                                                |
+|**Inputs**  |Address            | 1A                                                |
 |            |Write data         | 1Din                                              |
 |            |                   | C (connected to clk)                              |
 |            |                   | str (connected to mem_write)                      |
 |            |                   | ld (connected to mem_read)                        |
-| Outputs    |Read data          | 1D                                                |
-
-
-|Register File |Figure 4.17      | Digital                            |
-|--------------|-----------------|------------------------------------|
+|**Outputs** |Read data          | 1D                                                |
+|            |                   |                                    |
+|**Register File**|**Figure 4.17**|**Digital**                        |
 |              | Registers       | cpu_registers                      |
-| Inputs       | Read Register 1 | src1_addr                          |
+|**Inputs**    | Read Register 1 | src1_addr                          |
 |              | Read Register 2 | src2_addr                          |
 |              | Write Register  | dst_addr                           |
 |              | RegWrite        | write_en (connected to reg_write ) |
 |              | Write data      | data_in                            |
 |              |                 | clk (connects to clk in Inputs)    |
 |              |                 | rst (connects to rst in Inputs)    |
-| Outputs      | Read Data 1     | src1_out                           |
+|**Outputs**   | Read Data 1     | src1_out                           |
 |              | Read Data 2     | src2_out                           |
-
-| ALU          |Figure 4.17      | Digital                            |
-|--------------|-----------------|------------------------------------|
+|              |                 |                                    |
+| **ALU**      |**Figure 4.17**  | **Digital**                        |
 |              | ALU             | alu                                |
-| Inputs       | Top Input       | A                                  |
+|**Inputs**    | Top Input       | A                                  |
 |              | Bottom Input    | B                                  |
 |              | ALU Control     | alu_control                        |
-| Outputs      | ALU Result      | result                             |
+|**Outputs**   | ALU Result      | result                             |
 |              | Zero            | zero                               |
-
-| ALU Control  |Figure 4.17      | Digital                            |
-|--------------|-----------------|------------------------------------|
+|              |                 |                                    |
+|**ALU Control**|**Figure 4.17** | **Digital**                        |
 |              | ALU Control     | alu_control                        |
-| Inputs       | ALUOp           | alu_op                             |
+|**Inputs**    | ALUOp           | alu_op                             |
 |              | Instruction[5-0]| funct                              |
-| Outputs      | To ALU          | alu_control                        |
-
-|Control Unit  |Figure 4.17         | Digital                         |
-|--------------|--------------------|---------------------------------|
+|**Outputs**   | To ALU          | alu_control                        |
+|              |                 |                                    |
+|**Control Unit**|**Figure 4.17**   | **Digital**                     |
 |              | Control            | control_unit                    |
-| Inputs       | Instruction[31-26] | instr_op                        |
-| Outputs      | RegDst             | reg_dst                         |
+|**Inputs**    | Instruction[31-26] | instr_op                        |
+|**Outputs**   | RegDst             | reg_dst                         |
 |              | Branch             | branch                          |
 |              | MemRead            | mem_read                        |
 |              | MemtoReg           | mem_to_reg                      |
@@ -253,18 +247,16 @@ make this datapath work.
 |              | MemWrite           | mem_write                       |
 |              | ALUSrc             | alu_src                         |
 |              | RegWrite           | reg_write                       |
-
-|Branch Address Adder|Figure 4.17        | Digital                    |
-|--------------------|-------------------|----------------------------|
+|              |                    |                                 |
+|**Branch Address Adder**|**Figure 4.17**| **Digital**                |
 |                    |Add                | alu                        |
-| Inputs             |Upper Input        | A                          |
+|**Inputs**          |Upper Input        | A                          |
 |                    |Lower Input        | B                          |
 |                    |                   | alu_control (set to 2)     |
-| Outputs            |Add result         | result                     |
+|**Outputs**         |Add result         | result                     |
 |                    |                   | zero (unconnected)         |
-
-|PC Adder      |Figure 4.17        | Digital                          |
-|--------------|-------------------|----------------------------------|
+|                    |                   |                            |
+|**PC Adder**  |**Figure 4.17**    | **Digital**                      |
 |              |Add                | alu                              |
 | Inputs       |Upper Input        | A                                |
 |              |Lower Input        | B (set to 4)                     |
