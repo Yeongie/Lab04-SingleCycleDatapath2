@@ -14,7 +14,7 @@
     </entry>
     <entry>
       <string>preloadProgramFile</string>
-      <file>\home\allan\cs161L\Lab03-SingleCycleDatapath\init.hex</file>
+      <file>./init.hex</file>
     </entry>
   </attributes>
   <visualElements>
