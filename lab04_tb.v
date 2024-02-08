@@ -43,7 +43,7 @@ initial begin
 	$readmemb("init.coe", uut.DIG_RAMDualAccess_i7.memory,0,255);
 end 
 
-lab03 uut (
+lab04 uut (
     .clk(clk),
     .rst(rst),
     .PC(prog_count),
