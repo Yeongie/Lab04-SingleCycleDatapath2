@@ -169,8 +169,63 @@ at address 31 is 0x56. Therefore, at the end of executing this first instruction
 
 Repeat this step for each instruction and you have a hand tracing of a program execution.
 
-## Recommended Iterative Development
+## Implementing the Single Cycle Datapath
 
+For this lab we are going to use Digital to wire-up our implementation and then have it export the design to Verilog. We will
+then use the generated Verilog code to test your design. 
+
+For this lab you will start by opening [lab03.dig](./lab03.dig). In it you should see all the components of the datapath (which)
+are mostly written in Verilog. However, what is missing are all the wires connecting these componenents. Below is a picture of 
+what you will start with. 
+
+![Single Cycle Datapath Initial Design](./assets/lab03.png)
+
+Your goal is to wire all the components together correctly so that the simple instruction given in [init.asm](./init.asm) execute as
+predicted based on the hand tracing you do as part of the lab report. If everything matches, then your design should pass the autograder
+tests on Gradescope. I'll also give you the same tests in the test-bench file [lab04_tb.v](./lab04_tb.v). 
+
+The Digital file has all the components from the figure 4.17 above. However, the names of the componenents and the inputs and outputs
+are different. Below are tables that map between figure 4.17 and the design in Digital. From this you can see the interconnections that
+make this datapath work.
+
+| PC         |Figure 4.17 | Digital                            |
+|------------|------------|------------------------------------|
+|            |PC          | gen_register (with PC label below) |
+| Inputs     |            | clk (connects to clk in Inputs)    |
+|            |            | rst (connects to rst in Inputs)    |
+|            | Data In    | data_in                            |
+|            |            | write_en (connect it to clk)       |
+| Outputs    | Data Out   | data_out                           |
+
+
+| RAM        |Figure 4.17        | Digital                                           |
+|------------|-------------------|---------------------------------------------------|
+|            |Instruction Memory | cpumemory                                         |
+| Inputs     |Read Address       | 2A                                                |
+| Outputs    |Instruction[31-0]  | 2D                                                |
+|            |Data Memory        | cpumemory (Same componenet as Instruction Memory) |
+| Inputs     |Address            | 1A                                                |
+|            |Write data         | 1Din                                              |
+|            |                   | C (connected to clk)                              |
+|            |                   | str (connected to mem_write)                      |
+|            |                   | ld (connected to mem_read)                        |
+| Outputs    |Read data          | 1D                                                |
+
+
+|Register File |Figure 4.17      | Digital                            |
+|--------------|-----------------|------------------------------------|
+|              | Registers       | cpu_registers                      |
+| Inputs       | Read Register 1 | src1_addr                          |
+|              | Read Register 2 | src2_addr                          |
+|              | Write Register  | dst_addr                           |
+|              | RegWrite        | write_en (connected to reg_write ) |
+|              | Write data      | data_in                            |
+|              |                 | clk (connects to clk in Inputs)    |
+|              |                 | rst (connects to rst in Inputs)    |
+| Outputs      | Read Data 1     | src1_out                           |
+|              | Read Data 2     | src2_out                           |
+
+| ALU
 ### Step 1: 
 
 Count up the PC and check that each instruction is correct (`instr_opcode`, `reg1_addr`, `reg2_addr`, `write_reg_addr`)
