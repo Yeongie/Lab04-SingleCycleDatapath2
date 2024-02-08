@@ -225,7 +225,53 @@ make this datapath work.
 | Outputs      | Read Data 1     | src1_out                           |
 |              | Read Data 2     | src2_out                           |
 
-| ALU
+| ALU          |Figure 4.17      | Digital                            |
+|--------------|-----------------|------------------------------------|
+|              | ALU             | alu                                |
+| Inputs       | Top Input       | A                                  |
+|              | Bottom Input    | B                                  |
+|              | ALU Control     | alu_control                        |
+| Outputs      | ALU Result      | result                             |
+|              | Zero            | zero                               |
+
+| ALU Control  |Figure 4.17      | Digital                            |
+|--------------|-----------------|------------------------------------|
+|              | ALU Control     | alu_control                        |
+| Inputs       | ALUOp           | alu_op                             |
+|              | Instruction[5-0]| funct                              |
+| Outputs      | To ALU          | alu_control                        |
+
+|Control Unit  |Figure 4.17         | Digital                         |
+|--------------|--------------------|---------------------------------|
+|              | Control            | control_unit                    |
+| Inputs       | Instruction[31-26] | instr_op                        |
+| Outputs      | RegDst             | reg_dst                         |
+|              | Branch             | branch                          |
+|              | MemRead            | mem_read                        |
+|              | MemtoReg           | mem_to_reg                      |
+|              | ALUOp              | alu_op                          |
+|              | MemWrite           | mem_write                       |
+|              | ALUSrc             | alu_src                         |
+|              | RegWrite           | reg_write                       |
+
+|Branch Address Adder|Figure 4.17        | Digital                    |
+|--------------------|-------------------|----------------------------|
+|                    |Add                | alu                        |
+| Inputs             |Upper Input        | A                          |
+|                    |Lower Input        | B                          |
+|                    |                   | alu_control (set to 2)     |
+| Outputs            |Add result         | result                     |
+|                    |                   | zero (unconnected)         |
+
+|PC Adder      |Figure 4.17        | Digital                          |
+|--------------|-------------------|----------------------------------|
+|              |Add                | alu                              |
+| Inputs       |Upper Input        | A                                |
+|              |Lower Input        | B (set to 4)                     |
+|              |                   | alu_control (set to 2)           |
+| Outputs      |Add result         | result                           |
+|              |                   | zero (unconnected)               |
+
 ### Step 1: 
 
 Count up the PC and check that each instruction is correct (`instr_opcode`, `reg1_addr`, `reg2_addr`, `write_reg_addr`)
@@ -249,6 +295,7 @@ Connect the Data Memory* to the ALU and the CPU registers. At this point your da
 
 ### Step 5:
 Add the modules for the branching hardware. This may involve breaking some connections from step 1 to insert the proper hardware for branching. You should not have any undefined signal before this step, so it shouldn’t be too difficult to trace down any introduced high Z or undefined signals. 
+
 ## Deliverables
 
 For the turn-in of this lab, you should have a working **single-cycle datapath**. The true inputs to the top module ([`processor.v`](./processor.v)) are only a `clk`, and `rst` signals, although you will need to have the debug signals correctly connected as well. The datapath should be programmed by a “`.coe`” file that holds MIPS assembly instructions. This file is a paramter to the top module, but defaults to “`init.coe`”.
