@@ -43,7 +43,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>.\gen_register.v</file>
+          <file>./gen_register.v</file>
         </entry>
       </elementAttributes>
       <pos x="160" y="420"/>
@@ -73,7 +73,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>.\control_unit.v</file>
+          <file>./control_unit.v</file>
         </entry>
       </elementAttributes>
       <pos x="1000" y="180"/>
@@ -103,7 +103,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>.\cpu_registers.v</file>
+          <file>./cpu_registers.v</file>
         </entry>
       </elementAttributes>
       <pos x="1000" y="400"/>
@@ -167,7 +167,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>.\alu_control.v</file>
+          <file>./alu_control.v</file>
         </entry>
       </elementAttributes>
       <pos x="1060" y="640"/>
@@ -197,7 +197,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>.\alu.v</file>
+          <file>./alu.v</file>
         </entry>
       </elementAttributes>
       <pos x="1400" y="380"/>
@@ -247,7 +247,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>.\alu.v</file>
+          <file>./alu.v</file>
         </entry>
       </elementAttributes>
       <pos x="420" y="300"/>
@@ -287,7 +287,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>.\alu.v</file>
+          <file>./alu.v</file>
         </entry>
       </elementAttributes>
       <pos x="660" y="160"/>
