@@ -1,4 +1,5 @@
 [begin] (  Application Menu  )
+    [exec] (Digital) { /usr/local/Digital/Digital.sh } <>
     [exec] (GTK Wave) { gtkwave } <>
     [exec] (File Manager) { nautilus ~ } <>
     [exec] (Text Editor) { mousepad } <>
