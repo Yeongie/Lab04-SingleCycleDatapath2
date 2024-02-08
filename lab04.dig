@@ -14,7 +14,7 @@
     </entry>
     <entry>
       <string>preloadProgramFile</string>
-      <file>/home/allan/cs161L/Lab03-SingleCycleDatapath/init.hex</file>
+      <file>\home\allan\cs161L\Lab03-SingleCycleDatapath\init.hex</file>
     </entry>
   </attributes>
   <visualElements>
@@ -22,12 +22,12 @@
       <elementName>ExternalFile</elementName>
       <elementAttributes>
         <entry>
-          <string>Label</string>
-          <string>gen_register</string>
-        </entry>
-        <entry>
           <string>applicationType</string>
           <appType>IVERILOG</appType>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>gen_register</string>
         </entry>
         <entry>
           <string>externalInputs</string>
@@ -43,7 +43,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>/home/allan/cs161L/Lab03-SingleCycleDatapath/gen_register.v</file>
+          <file>.\gen_register.v</file>
         </entry>
       </elementAttributes>
       <pos x="160" y="420"/>
@@ -52,12 +52,12 @@
       <elementName>ExternalFile</elementName>
       <elementAttributes>
         <entry>
-          <string>Label</string>
-          <string>control_unit</string>
-        </entry>
-        <entry>
           <string>applicationType</string>
           <appType>IVERILOG</appType>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>control_unit</string>
         </entry>
         <entry>
           <string>externalInputs</string>
@@ -73,7 +73,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>/home/allan/cs161L/Lab03-SingleCycleDatapath/control_unit.v</file>
+          <file>.\control_unit.v</file>
         </entry>
       </elementAttributes>
       <pos x="1000" y="180"/>
@@ -82,12 +82,12 @@
       <elementName>ExternalFile</elementName>
       <elementAttributes>
         <entry>
-          <string>Label</string>
-          <string>cpu_registers</string>
-        </entry>
-        <entry>
           <string>applicationType</string>
           <appType>IVERILOG</appType>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>cpu_registers</string>
         </entry>
         <entry>
           <string>externalInputs</string>
@@ -103,7 +103,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>/home/allan/cs161L/Lab03-SingleCycleDatapath/cpu_registers.v</file>
+          <file>.\cpu_registers.v</file>
         </entry>
       </elementAttributes>
       <pos x="1000" y="400"/>
@@ -167,7 +167,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>/home/allan/cs161L/Lab03-SingleCycleDatapath/alu_control.v</file>
+          <file>.\alu_control.v</file>
         </entry>
       </elementAttributes>
       <pos x="1060" y="640"/>
@@ -176,12 +176,12 @@
       <elementName>ExternalFile</elementName>
       <elementAttributes>
         <entry>
-          <string>Label</string>
-          <string>alu</string>
-        </entry>
-        <entry>
           <string>applicationType</string>
           <appType>IVERILOG</appType>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>alu</string>
         </entry>
         <entry>
           <string>externalInputs</string>
@@ -197,7 +197,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>/home/allan/cs161L/Lab03-SingleCycleDatapath/alu.v</file>
+          <file>.\alu.v</file>
         </entry>
       </elementAttributes>
       <pos x="1400" y="380"/>
@@ -247,7 +247,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>/home/allan/cs161L/Lab03-SingleCycleDatapath/alu.v</file>
+          <file>.\alu.v</file>
         </entry>
       </elementAttributes>
       <pos x="420" y="300"/>
@@ -287,7 +287,7 @@
         </entry>
         <entry>
           <string>CodeFile</string>
-          <file>/home/allan/cs161L/Lab03-SingleCycleDatapath/alu.v</file>
+          <file>.\alu.v</file>
         </entry>
       </elementAttributes>
       <pos x="660" y="160"/>
@@ -315,20 +315,20 @@
       <elementName>RAMDualAccess</elementName>
       <elementAttributes>
         <entry>
-          <string>Label</string>
-          <string>cpumemory</string>
-        </entry>
-        <entry>
           <string>AddrBits</string>
           <int>8</int>
         </entry>
         <entry>
-          <string>Bits</string>
-          <int>32</int>
-        </entry>
-        <entry>
           <string>isProgramMemory</string>
           <boolean>true</boolean>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>cpumemory</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>32</int>
         </entry>
       </elementAttributes>
       <pos x="560" y="420"/>
@@ -351,12 +351,12 @@
           <string>PC</string>
         </entry>
         <entry>
-          <string>intFormat</string>
-          <intFormat>dec</intFormat>
-        </entry>
-        <entry>
           <string>Bits</string>
           <int>32</int>
+        </entry>
+        <entry>
+          <string>intFormat</string>
+          <intFormat>dec</intFormat>
         </entry>
       </elementAttributes>
       <pos x="2020" y="180"/>
@@ -369,12 +369,12 @@
           <string>opcode</string>
         </entry>
         <entry>
-          <string>intFormat</string>
-          <intFormat>hex</intFormat>
-        </entry>
-        <entry>
           <string>Bits</string>
           <int>6</int>
+        </entry>
+        <entry>
+          <string>intFormat</string>
+          <intFormat>hex</intFormat>
         </entry>
       </elementAttributes>
       <pos x="2020" y="240"/>
@@ -387,12 +387,12 @@
           <string>src1\_addr</string>
         </entry>
         <entry>
-          <string>intFormat</string>
-          <intFormat>dec</intFormat>
-        </entry>
-        <entry>
           <string>Bits</string>
           <int>5</int>
+        </entry>
+        <entry>
+          <string>intFormat</string>
+          <intFormat>dec</intFormat>
         </entry>
       </elementAttributes>
       <pos x="2020" y="440"/>
@@ -405,12 +405,12 @@
           <string>src1\_out</string>
         </entry>
         <entry>
-          <string>intFormat</string>
-          <intFormat>hex</intFormat>
-        </entry>
-        <entry>
           <string>Bits</string>
           <int>32</int>
+        </entry>
+        <entry>
+          <string>intFormat</string>
+          <intFormat>hex</intFormat>
         </entry>
       </elementAttributes>
       <pos x="2020" y="500"/>
@@ -423,12 +423,12 @@
           <string>src2\_addr</string>
         </entry>
         <entry>
-          <string>intFormat</string>
-          <intFormat>dec</intFormat>
-        </entry>
-        <entry>
           <string>Bits</string>
           <int>5</int>
+        </entry>
+        <entry>
+          <string>intFormat</string>
+          <intFormat>dec</intFormat>
         </entry>
       </elementAttributes>
       <pos x="2020" y="580"/>
@@ -441,12 +441,12 @@
           <string>src2\_out</string>
         </entry>
         <entry>
-          <string>intFormat</string>
-          <intFormat>hex</intFormat>
-        </entry>
-        <entry>
           <string>Bits</string>
           <int>32</int>
+        </entry>
+        <entry>
+          <string>intFormat</string>
+          <intFormat>hex</intFormat>
         </entry>
       </elementAttributes>
       <pos x="2020" y="640"/>
@@ -459,12 +459,12 @@
           <string>dst\_addr</string>
         </entry>
         <entry>
-          <string>intFormat</string>
-          <intFormat>dec</intFormat>
-        </entry>
-        <entry>
           <string>Bits</string>
           <int>5</int>
+        </entry>
+        <entry>
+          <string>intFormat</string>
+          <intFormat>dec</intFormat>
         </entry>
       </elementAttributes>
       <pos x="2020" y="720"/>
@@ -477,12 +477,12 @@
           <string>dst\_data</string>
         </entry>
         <entry>
-          <string>intFormat</string>
-          <intFormat>hex</intFormat>
-        </entry>
-        <entry>
           <string>Bits</string>
           <int>32</int>
+        </entry>
+        <entry>
+          <string>intFormat</string>
+          <intFormat>hex</intFormat>
         </entry>
       </elementAttributes>
       <pos x="2020" y="780"/>
@@ -491,12 +491,12 @@
       <elementName>Rectangle</elementName>
       <elementAttributes>
         <entry>
-          <string>Label</string>
-          <string>Outputs for testing</string>
-        </entry>
-        <entry>
           <string>RectHeight</string>
           <int>35</int>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>Outputs for testing</string>
         </entry>
         <entry>
           <string>RectWidth</string>
@@ -509,12 +509,12 @@
       <elementName>Rectangle</elementName>
       <elementAttributes>
         <entry>
-          <string>Label</string>
-          <string>Inputs</string>
-        </entry>
-        <entry>
           <string>RectHeight</string>
           <int>6</int>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>Inputs</string>
         </entry>
         <entry>
           <string>RectWidth</string>
