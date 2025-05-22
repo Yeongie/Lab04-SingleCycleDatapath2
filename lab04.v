@@ -4,8 +4,8 @@
  */
 //=========================================================================
 // Name & Email must be EXACTLY as in Gradescope roster!
-// Name: 
-// Email: 
+// Name: isaac lee
+// Email: ilee002@ucr.edu
 // 
 // Assignment name: 
 // Lab section: 
